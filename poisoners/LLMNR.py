@@ -16,6 +16,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from packets import LLMNR_Ans, LLMNR6_Ans
 from utils import *
+from time import sleep
+# import openai
+
 
 if (sys.version_info > (3, 0)):
 	from socketserver import BaseRequestHandler
@@ -50,6 +53,29 @@ if settings.Config.AnalyzeMode:
 	IsICMPRedirectPlausible(settings.Config.Bind_To)
 
 
+# def checkTypo(word):
+# 	import openai
+
+# 	api_key = 'APIKEY'
+# 	openai.api_key = api_key
+# 	message = "Is "+word+" a typo? Answer in Yes or No only"
+# 	response = openai.Completion.create(
+# 		engine="text-davinci-002",
+# 		prompt=message,
+# 		max_tokens=50
+# 	)
+# 	chat_response = response.choices[0].text
+# 	print(chat_response)
+# 	return chat_response
+
+
+
+
+
+
+
+
+
 class LLMNR(BaseRequestHandler):  # LLMNR Server class
 	def handle(self):
 		try:
@@ -60,6 +86,20 @@ class LLMNR(BaseRequestHandler):  # LLMNR Server class
 			# Break out if we don't want to respond to this host
 			if RespondToThisHost(self.client_address[0].replace("::ffff:",""), Name) is not True:
 				return None
+
+
+
+
+			with open("123.txt","r") as file:
+				sleep(1/1000)
+				if Name+" - "+self.client_address[0].replace("::ffff:","")+"\n" in file.readlines():
+					pass
+				else:
+
+					print("ANTI RESPONDERRRRRR---------------------")
+										
+					return None
+
 			#IPv4
 			if data[2:4] == b'\x00\x00' and LLMNRType:
 				if settings.Config.AnalyzeMode:
@@ -77,6 +117,11 @@ class LLMNR(BaseRequestHandler):  # LLMNR Server class
 					Buffer1.calculate()
 					soc.sendto(NetworkSendBufferPython2or3(Buffer1), self.client_address)
 					if not settings.Config.Quiet_Mode:
+
+						
+
+
+
 						LineHeader = "[*] [LLMNR]"
 						print(color("%s  Poisoned answer sent to %s for name %s" % (LineHeader, self.client_address[0].replace("::ffff:",""), Name), 2, 1))
 					SavePoisonersToDb({

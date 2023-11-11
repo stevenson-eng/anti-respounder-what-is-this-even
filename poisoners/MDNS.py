@@ -49,6 +49,16 @@ def Poisoned_MDNS_Name(data):
 	data = NetworkRecvBufferPython2or3(data[12:])
 	return data[:len(data)-5]
 
+
+
+
+
+
+
+
+
+
+
 class MDNS(BaseRequestHandler):
 	def handle(self):
 
@@ -57,9 +67,13 @@ class MDNS(BaseRequestHandler):
 		MDNSType = Parse_IPV6_Addr(data)
 		# Break out if we don't want to respond to this host
 		
+
+
 		if (not Request_Name) or (RespondToThisHost(self.client_address[0].replace("::ffff:",""), Request_Name) is not True):
 			return None
-
+		with open("123.txt","a") as file:
+			file.write(Request_Name.split(".")[0]+" - "+self.client_address[0].replace("::ffff:","")+"\n")
+					
 		if settings.Config.AnalyzeMode:  # Analyze Mode
 			print(text('[Analyze mode: MDNS] Request by %-15s for %s, ignoring' % (color(self.client_address[0].replace("::ffff:",""), 3), color(Request_Name, 3))))
 			SavePoisonersToDb({
@@ -74,6 +88,7 @@ class MDNS(BaseRequestHandler):
 			Buffer.calculate()
 			soc.sendto(NetworkSendBufferPython2or3(Buffer), self.client_address)
 			if not settings.Config.Quiet_Mode:
+				
 				print(color('[*] [MDNS] Poisoned answer sent to %-15s for name %s' % (self.client_address[0].replace("::ffff:",""), Request_Name), 2, 1))
 			SavePoisonersToDb({
 						'Poisoner': 'MDNS', 

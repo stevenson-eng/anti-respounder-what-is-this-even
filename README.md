@@ -2,6 +2,34 @@
 
 anti-respounder is a modified [Responder](https://github.com/lgandx/Responder) that tries to differentiate between a real client and a [respounder](https://github.com/codeexpress/respounder) using NBT-NS and mDNS in order to evade detection.
 
+## File Access ##
+
+https://github.com/0venoven/anti-respounder/assets/51714567/cdef544a-9393-42dc-acdd-eed8721266d3
+
+
+## LLMNR Poisoning ##
+
+
+https://github.com/0venoven/anti-respounder/assets/51714567/0bf24de7-afff-4d35-a534-8851fcc8c414
+
+
+## Respounder ##
+
+
+https://github.com/0venoven/anti-respounder/assets/51714567/48383c7d-e4a7-4033-b8c6-f5deb6d9865e
+
+
+## anti-respounder ##
+
+
+https://github.com/0venoven/anti-respounder/assets/51714567/5c1f9b5e-0b78-4531-817f-eb402da1a2a4
+
+
+## Disabling LLMNR, MDNS and NBT-NS ##
+
+
+https://github.com/0venoven/anti-respounder/assets/51714567/a8a504a3-f976-4e95-92d1-70405209c288
+
 
 ## Donation ##
 

@@ -1,6 +1,34 @@
 # anti-respounder
 
-anti-respounder is a modified [Responder](https://github.com/lgandx/Responder) that tries to differentiate between a real client and a [respounder](https://github.com/codeexpress/respounder) using NBT-NS and mDNS in order to evade detection.
+anti-respounder is a modified [Responder](https://github.com/lgandx/Responder) that tries (keyword being "tries" here) to differentiate between a real client and a [respounder](https://github.com/codeexpress/respounder) using NBT-NS and mDNS in order to evade detection.
+
+
+## Disclaimer ##
+
+1. Exploratory Project: This public fork, "anti-respounder," is an exploratory endeavor undertaken for personal learning and experimentation purposes. It is certainly and explicitly NOT intended for production or commercial use. We apologise if there was any misunderstanding.
+
+2. Functional limitations: Please note that the functionality of this project is experimental and might not work as expected, or even make sense to most, and again we apologise as such. The coding structure might not adhere to best practices, and the project's efficacy is not guaranteed. The theory behind it has multiple assumptions that could definitely be faulty as well. It is exploratory after all.
+
+![image](https://github.com/0venoven/anti-respounder/assets/51714567/8d219a25-97e6-4031-8af2-ce558d9cc68e)
+
+## Additional Notes ##
+Contributions and suggestions are welcome but understand that this project is unlikely to be actively maintained or developed further. Pull requests or feedback may not be accepted or implemented.
+
+The author(s) of this project disclaim responsibility for any consequences, damages, or issues resulting from the use or misuse of this codebase.
+
+Any rude, offensive, or disrespectful comments, issues, or pull requests may not be entertained or considered for discussion.
+
+## Theory ##
+
+Again, this project is exploratory, but our underlying hypothesis revolves around:
+
+1. We ran Wireshark and tried to figure out what the respounder does that caused responder to respond. Clearly there was only a single packet of LLMNR sent from the respounder to bait the responder into responding. (As of 2023)
+
+2. After looking at how a typo in a file request (simulation of a real file access which fails) caused not only LLMNR, but also mDNS and NBT-NS requests to be simultaneously broadcasted in the subnet, we decided to explore further into whether we could "log"/"capture"/"analyze" (or whichever the term is appropriate) the contents of what was being received to determine if the requests that the responder was receiving was indeed from a real client or if it was from a respounder.
+
+- Put simply, the concept is if the responder only receives LLMNR requests without receiving the corresponding mDNS or NBT-NS request that an erroneous file request by a client might trigger, then we will assume that that LLMNR request originates from a respounder in an attempt to detect responders and the responder will not respond to it, thereby evading detection.
+
+- Of course, there could be faults in our assumptions and this should be easily mitigated by simply having the respounder to also send out mDNS and NBT-NS requests, but the point is that we were simply exploring ways to make the responder able to evade detection using differences between a "real" client and a respounder.
 
 ## File Access ##
 
